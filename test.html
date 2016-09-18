@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>检查组件测试</title>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+      </div>
+      <div class="row">
+        <br>
+        <div class="col-xs-6 col-xs-offset-3">
+          <label class="control-label">非空的最多11个不为空格的字符组成的邮箱，检查屏蔽词‘HAHA’‘CH’</label>
+          <input class="form-control" type="text" name="name" id="check">
+        </div>
+      </div>
+      <div class="row">
+        <br>
+        <div class="col-xs-6 col-xs-offset-3">
+          <label class="control-label">不超过11个字符的手机号，自定义提示显示方式</label>
+          <input class="form-control" type="text" name="name" id="check1">
+          <p class="help-block"></p>
+        </div>
+      </div>
+      <div class="row">
+        <br>
+        <div class="col-xs-6 col-xs-offset-3">
+          <label class="control-label">自定义检验：检验内容是否为数字，不可输入空格</label>
+          <input class="form-control" type="text" name="name" id="check2">
+        </div>
+      </div>
+      <div class="row">
+        <br>
+        <div class="col-xs-6 col-xs-offset-3">
+          <label class="control-label">自定义禁止输入：仅能输入数字</label>
+          <input class="form-control" type="text" name="name" id="check3">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+          <br>
+          <button type="button" class="btn btn-default" id="123">
+            click!
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="Jquery/1.9.1/jquery.min.js"></script>
+  <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="InputCheck.js"></script>
+  <script>
+    $(function() {
+      var a = $("#check").inputCheck({
+        maxLength: 11,           // 最多字符数11个
+        notEmpty: true,          // 内容非空
+        noSpace: true,           // 不允许输入空格
+        type: 'email',           // 验证输入是否为邮箱
+        notAllow: ['CH', 'HAHA'],// 不允许输入这些字符
+      });
+      var b = $("#check1").inputCheck({
+        maxLength: 11,                   // 最多输入11个字符
+        type: 'phone',                   // 验证是否为手机号
+        resultWriter: function(text){    // 重写了writer函数，将警告内容
+          $(".help-block").text(text);   // 输出到 p.help-block 中
+        }
+      });
+      var c = $("#check2").inputCheck({
+        notEmpty: true,
+  			type: 'phone',
+  			noSpace: true,
+  			maxLength: 11,
+  			addForbid: {
+  				re: /[^\d]+/,
+  				tips: '请输入数字'
+  			}
+      });
+      var d = $("#check3").inputCheck({
+        addForbid: {               // 添加一项禁用
+          re: /[^\d]+/,
+          replace: "",
+        },
+      });
+      $("#123").click(function() {
+        alert(a() + "\n" + b() + "\n" + c() +"\n" + d());
+      });
+    });
+  </script>
+</html>
