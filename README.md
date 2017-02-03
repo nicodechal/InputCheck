@@ -8,7 +8,7 @@
 
 ### 二. 引用方式
 
-        <script src="${rctx }/utils/InputCheck/InputCheck.js"></script>
+        <script src="InputCheck.js"></script>
 
 ### 三. 依赖
 
